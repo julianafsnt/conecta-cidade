@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conecta Cidade - Zeladoria Urbana Participativa</title>
+  
+  <!-- Ícones Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <!-- Fonte Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Folha de Estilos -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="container header-content">
+      <div class="logo">
+        <i class="ph-bold ph-buildings"></i>
+        <div>
+          <h1>Conecta Cidade</h1>
+          <p>Plataforma Comunitária de Infraestrutura Urbana</p>
+        </div>
+      </div>
+      <span class="badge-city"><i class="ph ph-map-pin"></i> Conselheiro Lafaiete - MG</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Abas de Navegação -->
+    <nav class="tabs">
+      <button class="tab-btn active" onclick="switchTab('registro')">
+        <i class="ph ph-plus-circle"></i> Registrar Demanda
+      </button>
+      <button class="tab-btn" onclick="switchTab('mural')">
+        <i class="ph ph-list-dashes"></i> Mural de Ocorrências
+      </button>
+    </nav>
+
+    <!-- ABA 1: FORMULÁRIO DE REGISTRO -->
+    <section id="tab-registro">
+      <div class="card">
+        <h2>O que você gostaria de relatar hoje?</h2>
+        <p class="subtitle">Selecione a categoria do problema para agilizar o atendimento:</p>
+
+        <div class="category-grid">
+          <div class="category-card selected" onclick="selectCategory('Buraco na Via', this)">
+            <i class="ph ph-road-horizon"></i>
+            <span>Buraco na Via</span>
+          </div>
+          <div class="category-card" onclick="selectCategory('Iluminação Pública', this)">
+            <i class="ph ph-lightbulb"></i>
+            <span>Iluminação</span>
+          </div>
+          <div class="category-card" onclick="selectCategory('Descarte de Lixo/Entulho', this)">
+            <i class="ph ph-trash"></i>
+            <span>Lixo / Entulho</span>
+          </div>
+          <div class="category-card" onclick="selectCategory('Vazamento / Esgoto', this)">
+            <i class="ph ph-drop"></i>
+            <span>Vazamento / Esgoto</span>
+          </div>
+        </div>
+
+        <form id="formDemanda" onsubmit="salvarOcorrencia(event)">
+          <input type="hidden" id="categoriaSelecionada" value="Buraco na Via">
+
+          <div class="form-group">
+            <label for="localizacao">Endereço ou Ponto de Referência</label>
+            <input type="text" id="localizacao" placeholder="Ex: Rua Afonso Pena, Centro" required>
+            <button type="button" class="geo-btn" onclick="obterLocalizacao()">
+              <i class="ph ph-crosshair"></i> Obter minha localização via GPS
+            </button>
+          </div>
+
+          <div class="form-group">
+            <label for="descricao">Descrição Detalhada do Problema</label>
+            <textarea id="descricao" rows="3" placeholder="Descreva a situação encontrada no local." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="nomeCidadao">Seu Nome (opcional)</label>
+            <input type="text" id="nomeCidadao" placeholder="Seu nome ou associação comunitária">
+          </div>
+
+          <button type="submit" class="btn-submit">
+            <i class="ph ph-paper-plane-tilt"></i> Enviar Solicitação para a Prefeitura
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ABA 2: MURAL E ESTATÍSTICAS -->
+    <section id="tab-mural" style="display: none;">
+      <div class="stats-container">
+        <div class="stat-box">
+          <div class="stat-number" id="stat-total">0</div>
+          <div class="stat-label">Total de Relatos</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" id="stat-andamento" style="color: var(--warning);">0</div>
+          <div class="stat-label">Em Análise / Reparo</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" id="stat-concluido" style="color: var(--success);">0</div>
+          <div class="stat-label">Demandas Concluídas</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Ocorrências Cadastradas pela População</h2>
+        <div id="listaOcorrencias"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Script da Aplicação -->
+  <script src="script.js"></script>
+</body>
+</html>
